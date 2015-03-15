@@ -3,5 +3,5 @@ project(shell)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
-set(SOURCE_FILES src/main.c src/shell.c)
+set(SOURCE_FILES src/main.c src/shell.c src/interpreter.c)
 add_executable(shell ${SOURCE_FILES})

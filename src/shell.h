@@ -1,6 +1,8 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
+#define MAX_COMMAND_LENGTH 1000 * sizeof(char)
+
 typedef struct shell {
 } shell_t;
 
@@ -16,8 +18,13 @@ shell_t *create_shell();
 void destroy_shell(shell_t *);
 
 /*
- * Runs the shell.
+ * Runs the given shell.
  */
-bool run_shell(shell_t *);
+void run_shell(shell_t *);
+
+/*
+ * Gets a line from the standard input and returns it.
+ */
+char *get_input();
 
 #endif

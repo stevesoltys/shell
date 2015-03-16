@@ -18,4 +18,9 @@ command_t *create_command(char *, list_t *);
  */
 void destroy_command(command_t *);
 
+/*
+ * Prints a string representation of the given command. Used for debugging.
+ */
+char *print(command_t *);
+
 #endif

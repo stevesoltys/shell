@@ -28,3 +28,19 @@ void destroy_command(command_t *command) {
     free(command->name);
     free(command);
 }
+
+/*
+ * Prints a string representation of the given command. Used for debugging.
+ */
+char *print(command_t *command) {
+    printf("Command: [name: %s", command->name);
+    list_iterator_t *iterator = create_iterator(command->parameters);
+    char *parameter = get_item(iterator);
+    int count = 0;
+    while (parameter != NULL) {
+        printf(", parameter %d: %s", count++, parameter);
+        parameter = next_item(iterator);
+    }
+    printf("]\n");
+    destroy_iterator(iterator);
+}

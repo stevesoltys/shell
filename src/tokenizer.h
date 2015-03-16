@@ -6,7 +6,6 @@
 /*
  * Tokenizes the given input and returns the tokens as a list.
  */
-
 list_t *tokenize(char*);
 
 #endif

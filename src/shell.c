@@ -4,6 +4,7 @@
 #include <string.h>
 #include "shell.h"
 #include "interpreter.h"
+#include "command.h"
 
 /*
 * Creates a shell. The caller is responsible for freeing the allocated memory.
@@ -50,7 +51,15 @@ static char *get_input() {
 void run_shell(shell_t *shell) {
     while (true) {
         char *input = get_input();
-        interpret_command(input);
+        list_t *commands = interpret_command(input);
+        list_iterator_t *iterator = create_iterator(commands);
+        command_t *command = get_item(iterator);
+        while (command != NULL) {
+            print(command);
+            command = next_item(iterator);
+        }
+        destroy_iterator(iterator);
+        destroy_list(commands);
         free(input);
     }
 }

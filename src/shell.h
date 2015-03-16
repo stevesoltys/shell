@@ -22,9 +22,4 @@ void destroy_shell(shell_t *);
  */
 void run_shell(shell_t *);
 
-/*
- * Gets a line from the standard input and returns it.
- */
-char *get_input();
-
 #endif

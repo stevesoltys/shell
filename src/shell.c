@@ -10,6 +10,12 @@
 */
 shell_t *create_shell() {
     shell_t *shell = malloc(sizeof(shell_t));
+
+    if (shell == NULL) {
+        fprintf(stderr, "Error creating shell!\n");
+        return NULL;
+    }
+
     return shell;
 }
 
@@ -23,13 +29,14 @@ void destroy_shell(shell_t *shell) {
 /*
  * Gets a line from the standard input and returns it.
  */
-char *get_input() {
+static char *get_input() {
     printf("[nobody@nowhere]$ ");
     fflush(stdout);
 
     char *input = malloc(MAX_COMMAND_LENGTH);
     fgets(input, MAX_COMMAND_LENGTH, stdin);
 
+    /* replace the last character, if it is a new line. */
     size_t last_char = strlen(input) - 1;
     if (input[last_char] == '\n') {
         input[last_char] = '\0';

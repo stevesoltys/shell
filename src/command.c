@@ -7,7 +7,7 @@
 /*
  * Creates a command. The caller is responsible for freeing the allocated memory.
  */
-command_t *create_command(char *name, list_t *args) {
+command_t *create_command(char *name, list_t *parameters) {
     command_t *command = malloc(sizeof(command_t));
 
     if (command == NULL) {
@@ -16,7 +16,7 @@ command_t *create_command(char *name, list_t *args) {
     }
 
     command->name = strdup(name);
-    command->args = args;
+    command->parameters = parameters;
     return command;
 }
 
@@ -24,7 +24,7 @@ command_t *create_command(char *name, list_t *args) {
  * Destroys a command.
  */
 void destroy_command(command_t *command) {
-    destroy_list(command->args);
+    destroy_list(command->parameters);
     free(command->name);
     free(command);
 }

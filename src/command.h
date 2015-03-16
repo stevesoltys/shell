@@ -5,7 +5,7 @@
 
 typedef struct command {
     char *name;
-    list_t *args;
+    list_t *parameters;
 } command_t;
 
 /*

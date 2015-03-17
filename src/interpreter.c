@@ -22,7 +22,7 @@ static void parameter_list_destroy_function(void *object) {
  */
 static list_t *parse_parameters(list_iterator_t *iterator) {
     list_t *arguments = create_list(&parameter_list_destroy_function);
-    char *token = next_item(iterator);
+    char *token = get_item(iterator);
     while (token != NULL) {
         if (strcmp(token, "|") != 0) {
             insert_object(arguments, strdup(token));
@@ -37,7 +37,7 @@ static list_t *parse_parameters(list_iterator_t *iterator) {
 /*
  * Interprets the given input and returns a list of commands.
  */
-list_t *interpret_command(char *input) {
+list_t *interpret_input(char *input) {
     list_t *commands = create_list(&command_list_destroy_function);
     list_t *tokens = tokenize(input);
     list_iterator_t *iterator = create_iterator(tokens);

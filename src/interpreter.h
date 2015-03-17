@@ -6,6 +6,6 @@
 /*
  * Interprets the given command.
  */
-list_t *interpret_command(char *);
+list_t *interpret_input(char *);
 
 #endif

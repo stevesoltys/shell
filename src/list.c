@@ -87,6 +87,21 @@ bool insert_object(list_t *list, void *object) {
 }
 
 /*
+ * Gets the current size of the list.
+ */
+int get_size(list_t *list) {
+    list_iterator_t *iterator = create_iterator(list);
+    void *object = get_item(iterator);
+    int size = 0;
+    while (object != NULL) {
+        size++;
+        object = next_item(iterator);
+    }
+    destroy_iterator(iterator);
+    return size;
+}
+
+/*
  * Constructs a list iterator, given the list.
  */
 list_iterator_t *create_iterator(list_t *list) {
@@ -132,4 +147,17 @@ void *next_item(list_iterator_t *iterator) {
         }
     }
     return NULL;
+}
+
+/*
+ * Checks whether there are any items remaining in the list.
+ */
+bool has_next(list_iterator_t *iterator) {
+    if (iterator->current_index != NULL) {
+        list_element_t *next_element = iterator->current_index->next;
+        if (next_element != NULL) {
+            return true;
+        }
+    }
+    return false;
 }

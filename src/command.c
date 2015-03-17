@@ -7,7 +7,7 @@
 /*
  * Creates a command. The caller is responsible for freeing the allocated memory.
  */
-command_t *create_command(char *name, list_t *parameters) {
+command_t *create_command(char *path, list_t *parameters) {
     command_t *command = malloc(sizeof(command_t));
 
     if (command == NULL) {
@@ -15,7 +15,7 @@ command_t *create_command(char *name, list_t *parameters) {
         return NULL;
     }
 
-    command->name = strdup(name);
+    command->file = strdup(path);
     command->parameters = parameters;
     return command;
 }
@@ -25,15 +25,15 @@ command_t *create_command(char *name, list_t *parameters) {
  */
 void destroy_command(command_t *command) {
     destroy_list(command->parameters);
-    free(command->name);
+    free(command->file);
     free(command);
 }
 
 /*
  * Prints a string representation of the given command. Used for debugging.
  */
-char *print(command_t *command) {
-    printf("Command: [name: %s", command->name);
+char *print_command(command_t *command) {
+    printf("Command: [file: %s", command->file);
     list_iterator_t *iterator = create_iterator(command->parameters);
     char *parameter = get_item(iterator);
     int count = 0;

@@ -4,7 +4,7 @@
 #include "list.h"
 
 typedef struct command {
-    char *name;
+    char *file;
     list_t *parameters;
 } command_t;
 
@@ -21,6 +21,6 @@ void destroy_command(command_t *);
 /*
  * Prints a string representation of the given command. Used for debugging.
  */
-char *print(command_t *);
+char *print_command(command_t *);
 
 #endif

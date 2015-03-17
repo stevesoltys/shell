@@ -1,5 +1,5 @@
-#ifndef _SORTED_LIST_H_
-#define _SORTED_LIST_H_
+#ifndef _LIST_H_
+#define _LIST_H_
 
 #include <stdbool.h>
 
@@ -52,6 +52,11 @@ void destroy_list_element(list_t *, list_element_t *);
 bool insert_object(list_t *, void *);
 
 /*
+ * Gets the current size of the list.
+ */
+int get_size(list_t *);
+
+/*
  * An iterator for a list.
  */
 typedef struct list_iterator {
@@ -78,5 +83,10 @@ void *get_item(list_iterator_t *);
  * Gets the next item in the list iterator.
  */
 void *next_item(list_iterator_t *);
+
+/*
+ * Checks whether there are any items remaining in the list.
+ */
+bool has_next(list_iterator_t *);
 
 #endif

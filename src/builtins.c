@@ -33,7 +33,7 @@ int exit_b(int argc, char** argv)
     }
     else if(argc > 0)
     {
-        exit(atoi(argv[0]));
+        exit(atoi(argv[1]));
     }
 
     return 0; // Never reached.

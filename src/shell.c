@@ -51,7 +51,9 @@ static char *get_working_directory() {
  */
 static char *get_input() {
     char *working_directory = get_working_directory();
-    printf("[%s@%s %s]$ ", getenv("USER"), getenv("HOSTNAME"), working_directory);
+    char host_name[16];
+    gethostname(host_name, sizeof(host_name));
+    printf("[%s@%s %s]$ ", getenv("USER"), host_name, working_directory);
     fflush(stdout);
     free(working_directory);
 

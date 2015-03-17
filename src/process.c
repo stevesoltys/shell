@@ -116,13 +116,13 @@ list_t *run_commands(list_t *commands) {
         if (should_pipe_output) {
             /* File descriptors for piping the output of this process. */
             int output_fd[2];
-            /* Create a pipe for the output of this process. */
+            /* Create our file descriptors. */
             if (pipe(output_fd) == -1) {
                 perror("pipe");
                 exit(EXIT_FAILURE);
             }
 
-            /* Time to run our command and get our process! */
+            /* Time to run the command and get our process! */
             process_t *process = run_command(command, input_fd, output_fd);
             destroy_process(process);
 

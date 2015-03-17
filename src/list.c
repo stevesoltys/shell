@@ -13,6 +13,7 @@ list_t *create_list(destroy_function_t *destroy_func) {
         fprintf(stderr, "Error creating list!\n");
         return NULL;
     }
+
     list->destroy_function = destroy_func;
     list->head = NULL;
     return list;
@@ -37,9 +38,12 @@ void destroy_list(list_t *list) {
 list_element_t *create_list_element(void *value, list_element_t *next) {
     /* We dynamically allocate memory for an element node */
     list_element_t *element = malloc(sizeof(list_element_t));
+
     if (element == NULL) {
+        fprintf(stderr, "Error creating list element!\n");
         return NULL;
     }
+
     /* We set the value and the next node for the new element.*/
     element->value = value;
     element->next = next;
@@ -64,8 +68,7 @@ static void insert_after(list_element_t *index, list_element_t *element) {
 }
 
 /*
- * Inserts an object in the given list.
- * This function returns true when it succeeds, and false when it fails.
+ * Inserts an object in the given list. This function returns true when it succeeds, and false when it fails.
  */
 bool insert_object(list_t *list, void *object) {
     if (list->head == NULL) {
@@ -124,8 +127,7 @@ void destroy_iterator(list_iterator_t *iterator) {
 }
 
 /*
- * Gets the value of the current node that the list
- * iterator is pointing to.
+ * Gets the value of the current node that the list iterator is pointing to.
  */
 void *get_item(list_iterator_t *iterator) {
     if (iterator->current_index != NULL) {
@@ -135,8 +137,7 @@ void *get_item(list_iterator_t *iterator) {
 }
 
 /*
- * Gets the next item in the list iterator, and sets
- * the current index to that node.
+ * Gets the next item in the list iterator, and sets the current index to that node.
  */
 void *next_item(list_iterator_t *iterator) {
     if (iterator->current_index != NULL) {

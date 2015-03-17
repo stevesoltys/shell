@@ -14,6 +14,12 @@
  */
 static process_t *create_process(pid_t id) {
     process_t *process = malloc(sizeof(process_t));
+
+    if (process == NULL) {
+        fprintf(stderr, "Error creating process object!\n");
+        return NULL;
+    }
+
     process->id = id;
     return process;
 }

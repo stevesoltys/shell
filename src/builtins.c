@@ -2,20 +2,69 @@
 // Created by nick on 3/16/15.
 //
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
 #include "builtins.h"
 
-static const builtins_t functions[] =
+int get_position(char* name)
 {
-    {"exit", &exit},
-    {"cd", &cd}
-};
+    int position = -1;
+    int i = 0;
+    for(i = 0; i < BUILTIN_SIZE; i++)
+    {
+        if(strcmp(name,functions[i].name) == 0)
+        {
+            position = i;
+            break;
+        }
+    }
 
-int exit(list_t* args)
-{
-    return 0;
+    return position;
 }
 
-int cd(list_t* args)
+int exit_b(int argc, char** argv)
 {
-    return 0;
+    if(argc == 0)
+    {
+        exit(0);
+    }
+    else if(argc > 0)
+    {
+        exit(atoi(argv[0]));
+    }
+
+    return 0; // Never reached.
+}
+
+int cd_b(int argc, char** argv)
+{
+    int val = 0;
+    if(argc == 0)
+    {
+        // Change to home directory
+        val = chdir(getenv("HOME"));
+    }
+    else if(argc == 1)
+    {
+        // Change to given directory.
+        val = chdir(argv[1]);
+    }
+    else if(argc > 1)
+    {
+        // Too many arguments, print error.
+        fprintf(stderr, "Too many arguments.\n");
+        return -1;
+    }
+
+    if(val != 0)
+    {
+        // Problem changing directories, print error.
+        fprintf(stderr, "Error changing directories. Errno: %d\n", errno);
+    }
+
+    return val;
+
 }

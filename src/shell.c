@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include "builtins.h"
 #include "shell.h"
 #include "interpreter.h"
 #include "process.h"
@@ -50,7 +51,7 @@ static char *get_working_directory() {
  */
 static char *get_input() {
     char *working_directory = get_working_directory();
-    printf("[nobody@nowhere %s]$ ", working_directory);
+    printf("[%s@%s %s]$ ", getenv("USER"), getenv("HOSTNAME"), working_directory);
     fflush(stdout);
     free(working_directory);
 

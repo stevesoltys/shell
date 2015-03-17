@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include "process.h"
 #include "command.h"
+#include "builtins.h"
 
 /*
  * Creates a process, given the pid.
@@ -50,7 +51,21 @@ static void set_parameters(command_t *command, char **parameters) {
  * Runs a command, given the input and output file descriptors. Note that if either array contains file descriptors of
  * the value '-1', piping will be ignored for that direction.
  */
-static process_t *run_command(command_t *command, int input_fd[], int output_fd[]) {
+static process_t *run_command(command_t *command, int input_fd[], int output_fd[])
+{
+    int size = get_size(command->parameters);
+    char *parameters[size];
+    set_parameters(command, parameters);
+
+    int function_position = get_position(command->file);
+
+    if(function_position >= 0)
+    {
+        functions[function_position].f(size-1, parameters);
+        return create_process(getpid());
+    }
+
+
     /* Flag indicating whether we should pipe input for this command. */
     bool pipe_input = input_fd[0] != -1 && input_fd[1] != -1;
     /* Flag indicating whether we should pipe output for this command. */
@@ -72,8 +87,6 @@ static process_t *run_command(command_t *command, int input_fd[], int output_fd[
         }
 
         /* Next, we create a local array of parameters and use the set_parameters function to populate it. */
-        char *parameters[get_size(command->parameters)];
-        set_parameters(command, parameters);
 
         /* Time to execute our command! */
         execvp(command->file, parameters);

@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include "shell.h"
 #include "interpreter.h"
-#include "command.h"
 #include "process.h"
 
 /*

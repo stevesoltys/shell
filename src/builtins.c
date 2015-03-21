@@ -55,14 +55,14 @@ int cd_b(int argc, char** argv)
     else if(argc > 1)
     {
         // Too many arguments, print error.
-        fprintf(stderr, "Too many arguments.\n");
+        fprintf(stderr, "cd: too many arguments\n");
         return -1;
     }
 
     if(val != 0)
     {
         // Problem changing directories, print error.
-        fprintf(stderr, "Error changing directories. Errno: %d\n", errno);
+        fprintf(stderr, "cd: error changing directories, errno: %d\n", errno);
     }
 
     return val;

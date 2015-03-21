@@ -51,7 +51,7 @@ static void set_parameters(command_t *command, char **parameters) {
  * Runs a command, given the input and output file descriptors. Note that if either array contains file descriptors of
  * the value '-1', piping will be ignored for that direction.
  */
-static process_t *run_command(command_t *command, int input_fd[], int output_fd[])
+static void *run_command(command_t *command, int input_fd[], int output_fd[])
 {
     int size = get_size(command->parameters);
     char *parameters[size];
@@ -62,56 +62,53 @@ static process_t *run_command(command_t *command, int input_fd[], int output_fd[
     if(function_position >= 0)
     {
         functions[function_position].f(size-1, parameters);
-        return create_process(getpid());
     }
+    else
+    {
+        /* Flag indicating whether we should pipe input for this command. */
+        bool pipe_input = input_fd[0] != -1 && input_fd[1] != -1;
+        /* Flag indicating whether we should pipe output for this command. */
+        bool pipe_output = output_fd[0] != -1 && output_fd[1] != -1;
 
+        /* Time to fork the new child process. */
+        pid_t process_id = fork();
+        if (process_id == 0) {
+            /* If we should pipe the standard input, we do so. */
+            if (pipe_input) {
+                dup2(input_fd[0], STDIN_FILENO);
+                close(input_fd[1]);
+            }
 
-    /* Flag indicating whether we should pipe input for this command. */
-    bool pipe_input = input_fd[0] != -1 && input_fd[1] != -1;
-    /* Flag indicating whether we should pipe output for this command. */
-    bool pipe_output = output_fd[0] != -1 && output_fd[1] != -1;
+            /* If we should pipe the standard output, we do so. */
+            if (pipe_output) {
+                dup2(output_fd[1], STDOUT_FILENO);
+                close(output_fd[0]);
+            }
 
-    /* Time to fork the new child process. */
-    pid_t process_id = fork();
-    if (process_id == 0) {
-        /* If we should pipe the standard input, we do so. */
+            /* Next, we create a local array of parameters and use the set_parameters function to populate it. */
+
+            /* Time to execute our command! */
+            execvp(command->file, parameters);
+            perror("execvp");
+            exit(EXIT_FAILURE);
+        } else if (process_id == -1) {
+            /* There was an error during fork() */
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+
+        /* If we piped input for this process, we close the file descriptors on the parent process. */
         if (pipe_input) {
-            dup2(input_fd[0], STDIN_FILENO);
+            close(input_fd[0]);
             close(input_fd[1]);
         }
-
-        /* If we should pipe the standard output, we do so. */
-        if (pipe_output) {
-            dup2(output_fd[1], STDOUT_FILENO);
-            close(output_fd[0]);
-        }
-
-        /* Next, we create a local array of parameters and use the set_parameters function to populate it. */
-
-        /* Time to execute our command! */
-        execvp(command->file, parameters);
-        perror("execvp");
-        exit(EXIT_FAILURE);
-    } else if (process_id == -1) {
-        /* There was an error during fork() */
-        perror("fork");
-        exit(EXIT_FAILURE);
     }
-
-    /* If we piped input for this process, we close the file descriptors on the parent process. */
-    if (pipe_input) {
-        close(input_fd[0]);
-        close(input_fd[1]);
-    }
-
-    return create_process(process_id);
 }
 
 /*
  * Runs a list of commands, waits for them to terminate, and returns their exit statuses.
- * TODO: Exit statuses for child processes.
  */
-list_t *run_commands(list_t *commands) {
+void *run_commands(list_t *commands) {
     /* File descriptors used for piping the input of a process. */
     int input_fd[2];
     /* For the first command, we won't ever be piping the standard input. */
@@ -136,8 +133,7 @@ list_t *run_commands(list_t *commands) {
             }
 
             /* Time to run the command and get our process! */
-            process_t *process = run_command(command, input_fd, output_fd);
-            destroy_process(process);
+            run_command(command, input_fd, output_fd);
 
             /* Set the input file descriptor, used for piping output to the next command. */
             input_fd[0] = output_fd[0];
@@ -149,8 +145,7 @@ list_t *run_commands(list_t *commands) {
             output_fd[0] = output_fd[1] = -1;
 
             /* Time to run our command and get our process! */
-            process_t *process = run_command(command, input_fd, output_fd);
-            destroy_process(process);
+            run_command(command, input_fd, output_fd);
         }
 
         /* Onto the next command! */
@@ -159,9 +154,9 @@ list_t *run_commands(list_t *commands) {
     destroy_iterator(iterator);
 
     /* Wait for our child processes to die. */
-    int child_status;
-    while (wait(&child_status) != -1) {}
-
-    // TODO: Exit statuses for child processes.
-    return NULL;
+    int process_id, child_status;
+    while ((process_id = wait(&child_status)) != -1)
+    {
+        printf("Process %d exits with %d\n", process_id, child_status);
+    }
 }

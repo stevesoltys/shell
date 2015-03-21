@@ -13,6 +13,6 @@ typedef struct process {
     int exit_status;
 } process_t;
 
-list_t *run_commands(list_t *commands);
+void *run_commands(list_t *commands);
 
 #endif //_PROCESS_H_

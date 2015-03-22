@@ -9,8 +9,8 @@
 #include "process.h"
 
 /*
-* Creates a shell. The caller is responsible for freeing the allocated memory.
-*/
+ * Creates a shell. The caller is responsible for freeing the allocated memory.
+ */
 shell_t *create_shell() {
     shell_t *shell = malloc(sizeof(shell_t));
 
@@ -23,8 +23,8 @@ shell_t *create_shell() {
 }
 
 /*
-* Destroys the given shell.
-*/
+ * Destroys the given shell.
+ */
 void destroy_shell(shell_t *shell) {
     free(shell);
 }
@@ -47,16 +47,20 @@ static char *get_working_directory() {
 }
 
 /*
- * Gets a line from the standard input and returns it.
+ * Writes a shell prompt to the standard output containing the username, hostname, and working directory.
  */
-static char *get_input() {
+static void display_prompt() {
     char *working_directory = get_working_directory();
     char host_name[16];
     gethostname(host_name, sizeof(host_name));
     printf("[%s@%s %s]$ ", getenv("USER"), host_name, working_directory);
-    fflush(stdout);
     free(working_directory);
+}
 
+/*
+ * Gets a line from the standard input and returns it.
+ */
+static char *get_input() {
     char *input = malloc(MAX_COMMAND_LENGTH);
     fgets(input, MAX_COMMAND_LENGTH, stdin);
 
@@ -68,15 +72,30 @@ static char *get_input() {
     return input;
 }
 
+/*
+ * Gets a single line from the standard input, interprets it, and runs the resulting command(s).
+ */
+static void run_command_line() {
+    char *input = get_input();
+    list_t *commands = interpret_input(input);
+    run_commands(commands);
+    destroy_list(commands);
+    free(input);
+}
+
 /**
-* Runs the given shell.
-*/
+ * Runs the shell.
+ */
 void run_shell(shell_t *shell) {
-    while (true) {
-        char *input = get_input();
-        list_t *commands = interpret_input(input);
-        run_commands(commands);
-        destroy_list(commands);
-        free(input);
+    /* are we in a terminal session? */
+    if(isatty(STDIN_FILENO)) {
+        /* if we are, we loop and poll the user for input. */
+        while(true) {
+            display_prompt();
+            run_command_line();
+        }
+    } else {
+        /* if we are not, we run a single command line and exit. */
+        run_command_line();
     }
 }

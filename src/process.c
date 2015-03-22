@@ -47,20 +47,16 @@ static void set_parameters(command_t *command, char **parameters) {
  * Runs a command, given the input and output file descriptors. Note that if either array contains file descriptors of
  * the value '-1', piping will be ignored for that direction.
  */
-static void run_command(command_t *command, int input_fd[], int output_fd[])
-{
+static void run_command(command_t *command, int input_fd[], int output_fd[]) {
     int size = get_size(command->parameters);
     char *parameters[size];
     set_parameters(command, parameters);
 
     int function_position = get_position(command->file);
 
-    if(function_position >= 0)
-    {
-        functions[function_position].f(size-1, parameters);
-    }
-    else
-    {
+    if (function_position >= 0) {
+        functions[function_position].f(size - 1, parameters);
+    } else {
         /* Flag indicating whether we should pipe input for this command. */
         bool pipe_input = input_fd[0] != -1 && input_fd[1] != -1;
         /* Flag indicating whether we should pipe output for this command. */
@@ -151,8 +147,7 @@ void run_commands(list_t *commands) {
 
     /* Wait for our child processes to die. */
     int process_id, child_status;
-    while ((process_id = wait(&child_status)) != -1)
-    {
+    while ((process_id = wait(&child_status)) != -1) {
         printf("Process %d exits with %d\n", process_id, child_status);
     }
 }

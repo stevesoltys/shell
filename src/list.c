@@ -151,7 +151,7 @@ void *next_item(list_iterator_t *iterator) {
 }
 
 /*
- * Checks whether there are any items remaining in the list.
+ * Checks whether there are any items remaining in the list iterator.
  */
 bool has_next(list_iterator_t *iterator) {
     if (iterator->current_index != NULL) {

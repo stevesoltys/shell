@@ -21,6 +21,6 @@ void destroy_command(command_t *);
 /*
  * Prints a string representation of the given command. Used for debugging.
  */
-char *print_command(command_t *);
+void *print_command(command_t *);
 
 #endif

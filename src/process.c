@@ -12,7 +12,6 @@
 
 /*
  * Creates a process, given the pid.
- */
 static process_t *create_process(pid_t id) {
     process_t *process = malloc(sizeof(process_t));
 
@@ -25,14 +24,11 @@ static process_t *create_process(pid_t id) {
     return process;
 }
 
-/*
  * Destroys a process.
- */
 static void destroy_process(process_t *process) {
     free(process);
 }
 
-/*
  * Reads the parameter list of the given command and stores them in the given parameter array.
  */
 static void set_parameters(command_t *command, char **parameters) {
@@ -51,7 +47,7 @@ static void set_parameters(command_t *command, char **parameters) {
  * Runs a command, given the input and output file descriptors. Note that if either array contains file descriptors of
  * the value '-1', piping will be ignored for that direction.
  */
-static void *run_command(command_t *command, int input_fd[], int output_fd[])
+static void run_command(command_t *command, int input_fd[], int output_fd[])
 {
     int size = get_size(command->parameters);
     char *parameters[size];
@@ -108,7 +104,7 @@ static void *run_command(command_t *command, int input_fd[], int output_fd[])
 /*
  * Runs a list of commands, waits for them to terminate, and returns their exit statuses.
  */
-void *run_commands(list_t *commands) {
+void run_commands(list_t *commands) {
     /* File descriptors used for piping the input of a process. */
     int input_fd[2];
     /* For the first command, we won't ever be piping the standard input. */

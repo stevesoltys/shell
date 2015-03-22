@@ -32,7 +32,7 @@ void destroy_command(command_t *command) {
 /*
  * Prints a string representation of the given command. Used for debugging.
  */
-void *print_command(command_t *command) {
+void print_command(command_t *command) {
     printf("Command: [file: %s", command->file);
     list_iterator_t *iterator = create_iterator(command->parameters);
     char *parameter = get_item(iterator);

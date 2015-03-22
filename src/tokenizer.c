@@ -33,7 +33,7 @@ list_t *tokenize(char *input) {
             current_index += sizeof(char);
             char *next_quote = strchr(current_index, current_char);
             if (next_quote == NULL) {
-                fprintf(stderr, "Error while tokenizing input: Could not find the end of an open quote.\n");
+                fprintf(stderr, "Error while tokenizing input: Could not find the end of an open quote.");
                 break;
             }
             size_t token_size = next_quote - current_index;
@@ -42,7 +42,7 @@ list_t *tokenize(char *input) {
         } else if (current_char == '|') {
             insert_object(tokens, copy_token(current_index, sizeof(char)));
             current_index += sizeof(char);
-        } else if (current_char == ' ') {
+        } else if (current_char == ' ' || current_char == '\t') {
             current_index += sizeof(char);
         } else {
             char *start_index = current_index;

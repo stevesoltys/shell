@@ -32,7 +32,7 @@ myshell:
 	$(CC) $(CFLAGS) builtins.o command.o interpreter.o list.o main.o process.o shell.o tokenizer.o -o myshell
 
 clean:
-	-rm -rf *.o main *.dSYM
+	-rm -rf *.o myshell *.dSYM
 
 rebuild:
 	make clean all

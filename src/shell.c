@@ -86,16 +86,12 @@ static void run_command_line() {
 /**
  * Runs the shell.
  */
-void run_shell(shell_t *shell) {
+void run_shell(shell_t *shell)
+{
     /* are we in a terminal session? */
-    if(isatty(STDIN_FILENO)) {
-        /* if we are, we loop and poll the user for input. */
-        while(true) {
-            display_prompt();
-            run_command_line();
-        }
-    } else {
-        /* if we are not, we run a single command line and exit. */
+    while(!feof(stdin))
+    {
+        if(isatty(STDIN_FILENO)) display_prompt();
         run_command_line();
     }
 }

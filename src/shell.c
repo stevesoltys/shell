@@ -70,23 +70,20 @@ static void display_prompt() {
  */
 static char *get_input() {
     char *input = malloc(MAX_COMMAND_LENGTH);
-    fgets(input, MAX_COMMAND_LENGTH, stdin);
-
-    /* replace the last character, if it is a new line. */
-    size_t last_char = strlen(input) - 1;
-    if (input[last_char] == '\n') {
-        input[last_char] = '\0';
+    if (fgets(input, MAX_COMMAND_LENGTH, stdin) != 0)
+    {
+        /* replace the last character, if it is a new line. */
+        size_t last_char = strlen(input) - 1;
+        if (input[last_char] == '\n') {
+            input[last_char] = '\0';
+        }
     }
-    return input;
-}
+    else
+    {
+        input = NULL;
+    }
 
-/*
- * Checks for invalid input from pipes.
- */
-static bool is_Valid(char *in)
-{
-    if(isalnum(in[0]) || in[0] == ' ' || in[0] == '\t') return true;
-    else return false;
+    return input;
 }
 
 /*
@@ -94,7 +91,7 @@ static bool is_Valid(char *in)
  */
 static void run_command_line() {
     char *input = get_input();
-    if(is_Valid(input))
+    if(input != NULL)
     {
         list_t *commands = interpret_input(input);
         run_command_list(commands);
@@ -108,10 +105,13 @@ static void run_command_line() {
  */
 void run_shell(shell_t *shell)
 {
-    /* are we in a terminal session? */
+    /* Loop until we reach the end of file. */
     while(!feof(stdin))
     {
         if(isatty(STDIN_FILENO)) display_prompt();
         run_command_line();
     }
+
+    /* Print a newline so the terminal does not start on the wrong line. */
+    printf("\n");
 }

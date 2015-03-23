@@ -1,8 +1,16 @@
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * shell.c
+ * This file contains functions used to create, destroy and manipulate a shell.
+ */
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
 #include "builtins.h"
 #include "shell.h"
 #include "interpreter.h"
@@ -73,17 +81,29 @@ static char *get_input() {
 }
 
 /*
+ * Checks for invalid input from pipes.
+ */
+static bool is_Valid(char *in)
+{
+    if(isalnum(in[0]) || in[0] == ' ' || in[0] == '\t') return true;
+    else return false;
+}
+
+/*
  * Gets a single line from the standard input, interprets it, and runs the resulting command(s).
  */
 static void run_command_line() {
     char *input = get_input();
-    list_t *commands = interpret_input(input);
-    run_commands(commands);
-    destroy_list(commands);
+    if(is_Valid(input))
+    {
+        list_t *commands = interpret_input(input);
+        run_command_list(commands);
+        destroy_list(commands);
+    }
     free(input);
 }
 
-/**
+/*
  * Runs the shell.
  */
 void run_shell(shell_t *shell)

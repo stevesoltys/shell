@@ -1,3 +1,10 @@
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * tokenizer.c
+ * This file contains functions used to tokenize input into commands.
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>

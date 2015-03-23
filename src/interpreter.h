@@ -1,3 +1,10 @@
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * interpreter.c
+ * This file contains a prototype function for interpreter.c.
+ */
+
 #ifndef _INTERPRETER_H_
 #define _INTERPRETER_H_
 

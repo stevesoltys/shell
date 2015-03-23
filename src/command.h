@@ -1,3 +1,10 @@
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * command.h
+ * This file contains function prototypes for command.c.
+ */
+
 #ifndef _COMMAND_H_
 #define _COMMAND_H_
 

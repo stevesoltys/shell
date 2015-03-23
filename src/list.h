@@ -1,3 +1,10 @@
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * list.h
+ * This file contains prototype functions for list.c.
+ */
+
 #ifndef _LIST_H_
 #define _LIST_H_
 

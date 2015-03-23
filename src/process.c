@@ -1,6 +1,9 @@
-//
-// Created by Steve Soltys on 3/16/15.
-//
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * process.c
+ * This file contains functions used to run commands as processes and set their parameters.
+ */
 
 #include <malloc.h>
 #include <unistd.h>
@@ -11,24 +14,6 @@
 #include "builtins.h"
 
 /*
- * Creates a process, given the pid.
-static process_t *create_process(pid_t id) {
-    process_t *process = malloc(sizeof(process_t));
-
-    if (process == NULL) {
-        fprintf(stderr, "Error creating process object!\n");
-        return NULL;
-    }
-
-    process->id = id;
-    return process;
-}
-
- * Destroys a process.
-static void destroy_process(process_t *process) {
-    free(process);
-}
-
  * Reads the parameter list of the given command and stores them in the given parameter array.
  */
 static void set_parameters(command_t *command, char **parameters) {
@@ -47,7 +32,7 @@ static void set_parameters(command_t *command, char **parameters) {
  * Runs a command, given the input and output file descriptors. Note that if either array contains file descriptors of
  * the value '-1', piping will be ignored for that direction.
  */
-static void run_command(command_t *command, int input_fd[], int output_fd[]) {
+static void run_single_command(command_t *command, int input_fd[], int output_fd[]) {
     int size = get_size(command->parameters);
     char *parameters[size];
     set_parameters(command, parameters);
@@ -100,7 +85,7 @@ static void run_command(command_t *command, int input_fd[], int output_fd[]) {
 /*
  * Runs a list of commands, waits for them to terminate, and returns their exit statuses.
  */
-void run_commands(list_t *commands) {
+void run_command_list(list_t *commands) {
     /* File descriptors used for piping the input of a process. */
     int input_fd[2];
     /* For the first command, we won't ever be piping the standard input. */
@@ -125,7 +110,7 @@ void run_commands(list_t *commands) {
             }
 
             /* Time to run the command and get our process! */
-            run_command(command, input_fd, output_fd);
+            run_single_command(command, input_fd, output_fd);
 
             /* Set the input file descriptor, used for piping output to the next command. */
             input_fd[0] = output_fd[0];
@@ -137,7 +122,7 @@ void run_commands(list_t *commands) {
             output_fd[0] = output_fd[1] = -1;
 
             /* Time to run our command and get our process! */
-            run_command(command, input_fd, output_fd);
+            run_single_command(command, input_fd, output_fd);
         }
 
         /* Onto the next command! */

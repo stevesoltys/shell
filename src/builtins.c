@@ -1,6 +1,9 @@
-//
-// Created by nick on 3/16/15.
-//
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * builtins.c
+ * This file contains functions used to execute built-in commands.
+ */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -9,6 +12,9 @@
 #include <string.h>
 #include "builtins.h"
 
+/*
+ * Gets the position of a built-in function in the pre-defined array.
+ */
 int get_position(char* name)
 {
     int position = -1;
@@ -25,6 +31,9 @@ int get_position(char* name)
     return position;
 }
 
+/*
+ * Built-in "exit" function. Exits with 0 if there are no parameters, otherwise exits with the first parameter.
+ */
 int exit_b(int argc, char** argv)
 {
     if(argc == 0)
@@ -39,17 +48,20 @@ int exit_b(int argc, char** argv)
     return 0; // Never reached.
 }
 
+/*
+ * Built-in "cd" function. Changes the current working directory based on the number of arguments.
+ */
 int cd_b(int argc, char** argv)
 {
     int val = 0;
     if(argc == 0)
     {
-        // Change to home directory
+        // Change to the home directory
         val = chdir(getenv("HOME"));
     }
     else if(argc == 1)
     {
-        // Change to given directory.
+        // Change to the given directory.
         val = chdir(argv[1]);
     }
     else if(argc > 1)

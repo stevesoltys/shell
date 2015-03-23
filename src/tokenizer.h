@@ -1,3 +1,10 @@
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * tokenizer.h
+ * This file contains function prototypes for tokenizer.c.
+ */
+
 #ifndef _TOKENIZER_H_
 #define _TOKENIZER_H_
 

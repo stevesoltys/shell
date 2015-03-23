@@ -1,3 +1,10 @@
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * list.c
+ * This file contains functions used to create, destroy and manipulate linked lists.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>

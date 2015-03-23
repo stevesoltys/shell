@@ -1,3 +1,10 @@
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * shell.h
+ * This file contains function prototypes for shell.c.
+ */
+
 #ifndef _SHELL_H_
 #define _SHELL_H_
 

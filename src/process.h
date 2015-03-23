@@ -1,6 +1,9 @@
-//
-// Created by Steve Soltys on 3/16/15.
-//
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * process.h
+ * This file contains function prototypes for process.h.
+ */
 
 #ifndef _PROCESS_H_
 #define _PROCESS_H_
@@ -8,11 +11,10 @@
 #include <sched.h>
 #include "list.h"
 
-typedef struct process {
-    pid_t id;
-    int exit_status;
-} process_t;
 
-void run_commands(list_t *commands);
+/*
+ * Runs a list of commands, waits for them to terminate, and returns their exit statuses.
+ */
+void run_command_list(list_t *commands);
 
 #endif //_PROCESS_H_

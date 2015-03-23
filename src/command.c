@@ -1,3 +1,10 @@
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * command.c
+ * This file contains functions used to create and destroy commands.
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -27,20 +34,4 @@ void destroy_command(command_t *command) {
     destroy_list(command->parameters);
     free(command->file);
     free(command);
-}
-
-/*
- * Prints a string representation of the given command. Used for debugging.
- */
-void print_command(command_t *command) {
-    printf("Command: [file: %s", command->file);
-    list_iterator_t *iterator = create_iterator(command->parameters);
-    char *parameter = get_item(iterator);
-    int count = 0;
-    while (parameter != NULL) {
-        printf(", parameter %d: %s", count++, parameter);
-        parameter = next_item(iterator);
-    }
-    printf("]\n");
-    destroy_iterator(iterator);
 }

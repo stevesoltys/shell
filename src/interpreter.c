@@ -1,3 +1,10 @@
+/* Steve Soltys & Nick Burkard
+ * CS 416
+ * Assignment 5 - Shell
+ * interpreter.c
+ * This file contains functions used to interpret commands.
+ */
+
 #include <string.h>
 #include <stdlib.h>
 #include "tokenizer.h"

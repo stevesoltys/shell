@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
-#include "builtins.h"
+#include "builtin.h"
 
 /*
  * Gets the position of a built-in function in the pre-defined array.

@@ -1,12 +1,12 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
  * Assignment 5 - Simple Shell
- * builtins.h
+ * builtin.h
  * This file contains function prototypes and a structure for builtins.c.
  */
 
-#ifndef _SHELL_COMMANDS_H_
-#define _SHELL_COMMANDS_H_
+#ifndef _BUILTIN_H_
+#define _BUILTIN_H_
 
 #define BUILTIN_SIZE 2
 
@@ -45,4 +45,4 @@ static const builtins_t functions[] =
     {"cd", &cd_b}
 };
 
-#endif //_SHELL_COMMANDS_H_
+#endif

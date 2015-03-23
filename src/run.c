@@ -1,17 +1,17 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
  * Assignment 5 - Shell
- * process.c
- * This file contains functions used to run commands as processes and set their parameters.
+ * run.c
+ * This file contains functions used to run commands and set their parameters.
  */
 
 #include <malloc.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
-#include "process.h"
+#include "run.h"
 #include "command.h"
-#include "builtins.h"
+#include "builtin.h"
 
 /*
  * Reads the parameter list of the given command and stores them in the given parameter array.

@@ -1,12 +1,12 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
  * Assignment 5 - Simple Shell
- * process.h
- * This file contains function prototypes for process.h.
+ * run.h
+ * This file contains function prototypes for run.h.
  */
 
-#ifndef _PROCESS_H_
-#define _PROCESS_H_
+#ifndef _RUN_H_
+#define _RUN_H_
 
 #include <sched.h>
 #include "list.h"
@@ -17,4 +17,4 @@
  */
 void run_command_list(list_t *commands);
 
-#endif //_PROCESS_H_
+#endif

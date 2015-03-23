@@ -1,12 +1,13 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
- * Assignment 5 - Shell
+ * Assignment 5 - Simple Shell
  * interpreter.c
  * This file contains functions used to interpret commands.
  */
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "tokenizer.h"
 #include "command.h"
 
@@ -47,14 +48,23 @@ static list_t *parse_parameters(list_iterator_t *iterator) {
 list_t *interpret_input(char *input) {
     list_t *commands = create_list(&command_list_destroy_function);
     list_t *tokens = tokenize(input);
-    list_iterator_t *iterator = create_iterator(tokens);
-    char *command_name = get_item(iterator);
-    while (command_name != NULL) {
-        list_t *command_parameters = parse_parameters(iterator);
-        insert_object(commands, create_command(command_name, command_parameters));
-        command_name = next_item(iterator);
+    if (tokens != NULL)
+    {
+        list_iterator_t *iterator = create_iterator(tokens);
+        char *command_name = get_item(iterator);
+        while (command_name != NULL) {
+            list_t *command_parameters = parse_parameters(iterator);
+            insert_object(commands, create_command(command_name, command_parameters));
+            command_name = next_item(iterator);
+        }
+        destroy_iterator(iterator);
+        destroy_list(tokens);
     }
-    destroy_iterator(iterator);
-    destroy_list(tokens);
+    else
+    {
+        destroy_list(commands);
+        commands = NULL;
+    }
+
     return commands;
 }

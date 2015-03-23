@@ -1,6 +1,6 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
- * Assignment 5 - Shell
+ * Assignment 5 - Simple Shell
  * builtins.c
  * This file contains functions used to execute built-in commands.
  */
@@ -40,9 +40,14 @@ int exit_b(int argc, char** argv)
     {
         exit(0);
     }
-    else if(argc > 0)
+    else if(argc == 1)
     {
         exit(atoi(argv[1]));
+    }
+    else if(argc > 1)
+    {
+        fprintf(stderr, "exit: too many arguments\n");
+        return -1;
     }
 
     return 0; // Never reached.

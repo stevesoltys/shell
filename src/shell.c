@@ -1,41 +1,19 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
- * Assignment 5 - Shell
+ * Assignment 5 - Simple Shell
  * shell.c
  * This file contains functions used to create, destroy and manipulate a shell.
  */
 
 #include <stdlib.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <ctype.h>
 #include "builtins.h"
 #include "shell.h"
 #include "interpreter.h"
 #include "process.h"
 
-/*
- * Creates a shell. The caller is responsible for freeing the allocated memory.
- */
-shell_t *create_shell() {
-    shell_t *shell = malloc(sizeof(shell_t));
-
-    if (shell == NULL) {
-        fprintf(stderr, "Error creating shell!\n");
-        return NULL;
-    }
-
-    return shell;
-}
-
-/*
- * Destroys the given shell.
- */
-void destroy_shell(shell_t *shell) {
-    free(shell);
-}
 
 /*
  * Obtains the file name of the current working directory and returns it.
@@ -94,8 +72,15 @@ static void run_command_line() {
     if(input != NULL)
     {
         list_t *commands = interpret_input(input);
-        run_command_list(commands);
-        destroy_list(commands);
+        if(commands != NULL)
+        {
+            run_command_list(commands);
+            destroy_list(commands);
+        }
+        else
+        {
+            fflush(stderr);
+        }
     }
     free(input);
 }
@@ -103,7 +88,7 @@ static void run_command_line() {
 /*
  * Runs the shell.
  */
-void run_shell(shell_t *shell)
+void run_shell()
 {
     /* Loop until we reach the end of file. */
     while(!feof(stdin))

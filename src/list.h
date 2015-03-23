@@ -1,6 +1,6 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
- * Assignment 5 - Shell
+ * Assignment 5 - Simple Shell
  * list.h
  * This file contains prototype functions for list.c.
  */

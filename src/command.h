@@ -1,6 +1,6 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
- * Assignment 5 - Shell
+ * Assignment 5 - Simple Shell
  * command.h
  * This file contains function prototypes for command.c.
  */
@@ -24,10 +24,5 @@ command_t *create_command(char *, list_t *);
  * Destroys a command.
  */
 void destroy_command(command_t *);
-
-/*
- * Prints a string representation of the given command. Used for debugging.
- */
-void print_command(command_t *);
 
 #endif

@@ -1,6 +1,6 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
- * Assignment 5 - Shell
+ * Assignment 5 - Simple Shell
  * list.c
  * This file contains functions used to create, destroy and manipulate linked lists.
  */

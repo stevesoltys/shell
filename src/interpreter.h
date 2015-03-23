@@ -1,6 +1,6 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
- * Assignment 5 - Shell
+ * Assignment 5 - Simple Shell
  * interpreter.c
  * This file contains a prototype function for interpreter.c.
  */

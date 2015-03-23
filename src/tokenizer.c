@@ -1,6 +1,6 @@
 /* Steve Soltys & Nick Burkard
  * CS 416
- * Assignment 5 - Shell
+ * Assignment 5 - Simple Shell
  * tokenizer.c
  * This file contains functions used to tokenize input into commands.
  */
@@ -40,8 +40,9 @@ list_t *tokenize(char *input) {
             current_index += sizeof(char);
             char *next_quote = strchr(current_index, current_char);
             if (next_quote == NULL) {
-                fprintf(stderr, "Error while tokenizing input: Could not find the end of an open quote.");
-                break;
+                fprintf(stderr, "Error while tokenizing input: Could not find the end of an open quote.\n");
+                destroy_list(tokens);
+                return NULL;
             }
             size_t token_size = next_quote - current_index;
             insert_object(tokens, copy_token(current_index, token_size));

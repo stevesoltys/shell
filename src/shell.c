@@ -45,8 +45,7 @@ static char *get_input() {
         if (input[last_char] == '\n') {
             input[last_char] = '\0';
         }
-    }
-    else {
+    } else {
         input = NULL;
     }
 
@@ -63,8 +62,7 @@ static void run_command_line() {
         if (commands != NULL) {
             run_command_list(commands);
             destroy_list(commands);
-        }
-        else {
+        } else {
             fflush(stderr);
         }
     }

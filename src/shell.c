@@ -71,10 +71,7 @@ static void run_command_line() {
     free(input);
 }
 
-/*
- * Runs the shell.
- */
-void run_shell() {
+int main(int argc, char **argv) {
     /* Loop until we reach the end of file. */
     while (!feof(stdin)) {
         if (isatty(STDIN_FILENO)) display_prompt();
@@ -83,4 +80,6 @@ void run_shell() {
 
     /* Print a newline so the terminal does not start on the wrong line. */
     printf("\n");
+
+    return EXIT_SUCCESS;
 }

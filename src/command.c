@@ -1,10 +1,3 @@
-/* Steve Soltys & Nick Burkard
- * CS 416
- * Assignment 5 - Shell
- * command.c
- * This file contains functions used to create, destroy and run commands, and set their parameters.
- */
-
 #include <malloc.h>
 #include <unistd.h>
 #include <stdlib.h>

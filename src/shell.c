@@ -1,10 +1,3 @@
-/* Steve Soltys & Nick Burkard
- * CS 416
- * Assignment 5 - Simple Shell
- * shell.c
- * This file contains functions used to create, destroy and manipulate a shell.
- */
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -12,7 +5,6 @@
 #include "builtin.h"
 #include "shell.h"
 #include "interpreter.h"
-
 
 /*
  * Obtains the file name of the current working directory and returns it.
@@ -47,16 +39,14 @@ static void display_prompt() {
  */
 static char *get_input() {
     char *input = malloc(MAX_COMMAND_LENGTH);
-    if (fgets(input, MAX_COMMAND_LENGTH, stdin) != 0)
-    {
+    if (fgets(input, MAX_COMMAND_LENGTH, stdin) != 0) {
         /* replace the last character, if it is a new line. */
         size_t last_char = strlen(input) - 1;
         if (input[last_char] == '\n') {
             input[last_char] = '\0';
         }
     }
-    else
-    {
+    else {
         input = NULL;
     }
 
@@ -68,16 +58,13 @@ static char *get_input() {
  */
 static void run_command_line() {
     char *input = get_input();
-    if(input != NULL)
-    {
+    if (input != NULL) {
         list_t *commands = interpret_input(input);
-        if(commands != NULL)
-        {
+        if (commands != NULL) {
             run_command_list(commands);
             destroy_list(commands);
         }
-        else
-        {
+        else {
             fflush(stderr);
         }
     }
@@ -87,12 +74,10 @@ static void run_command_line() {
 /*
  * Runs the shell.
  */
-void run_shell()
-{
+void run_shell() {
     /* Loop until we reach the end of file. */
-    while(!feof(stdin))
-    {
-        if(isatty(STDIN_FILENO)) display_prompt();
+    while (!feof(stdin)) {
+        if (isatty(STDIN_FILENO)) display_prompt();
         run_command_line();
     }
 
